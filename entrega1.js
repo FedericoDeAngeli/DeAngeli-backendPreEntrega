@@ -33,8 +33,8 @@ async init(){
     await this.writeProduct()
 }
 
-static generarId(){
-    return ++productManager.productsId
+ static generarId(){
+  return  ++productManager.productsId
 }
 
 async readProduct(){
@@ -45,8 +45,6 @@ async readProduct(){
 async writeProduct(){
     
     await fs.writeFile(this.path, JSON.stringify(this.products)) 
-}catch(error){
-    console.log(error.message)
 }
 
 
@@ -55,7 +53,7 @@ async updateProduct(id, {title, description, price, thumbnail, code, stock}){
     const index = this.products.findIndex((e)=> e.id === id)
     if(index !== -1){
         this.products[index] = new Product({
-        id, title, description, price, thumbnail, code, stock })
+        title, description, price, thumbnail, code, stock })
         
         await this.writeProduct()
         return this.products
@@ -65,13 +63,15 @@ async updateProduct(id, {title, description, price, thumbnail, code, stock}){
     }
 }
 
-async deleteProduct(){
-    const index = this.products.findIndex((e)=> e.id === id)
-    if(index !== -1){
-        await fs.unlink(this.path, index)
-        return this.products
-    }
-}
+async deleteProduct(id){
+   const index = this.products.findIndex((e)=> e.id === id)
+  if(index !== -1){
+    await this.readProduct()
+    this.products.splice(index, 1)
+      await this.writeProduct()
+      return this.products
+   }
+ }
 
 
 async getProducts(){
@@ -110,9 +110,9 @@ async addProduct({title, description, price, code, thumbnail, stock}){
 
 async function main(){
 const pm = new productManager({ruta: "productManager.json"})
-pm.init()
+ pm.init()
 
-console.log(pm.getProducts())
+ 
 
 const p1 = await pm.addProduct ({title: "Curcuma",description: "Adobo", price: "150", code:"1", thumbnail: "img1", stock: "20"})
 const p2 = await pm.addProduct ({description: "Molida", price: "250", code:"2",thumbnail: "img2", stock: "10"})   
@@ -121,6 +121,7 @@ const p4 = await pm.addProduct ({title: "Pimentón",description: "Español", pri
 const p5 = await pm.addProduct ({title: "Cereal",description: "Ositos", price: "700", code:"6",thumbnail: "img6", stock: "18"})
 const p6 = await pm.addProduct ({title: "Orégano",description: "Especial", price: "410", code:"7",thumbnail: "img7", stock: "32"})
 
+console.log(await pm.getProducts())
 
 // console.log(pm.getProducts())
 
@@ -132,9 +133,10 @@ const p6 = await pm.addProduct ({title: "Orégano",description: "Especial", pric
 
 // console.log(productNotFound)
 
-pm.updateProduct(3, {title:"Aji cayena",description: "picante", price: "450", thumbnail:"img5",code: "5", stock: "26"})
-pm.deleteProduct(1)
-
+await pm.updateProduct(3, {title:"Aji cayena",description: "picante", price: "450", thumbnail:"img5",code: "5", stock: "26"})
+console.log(await pm.getProducts())
+await pm.deleteProduct(1)
+console.log(await pm.getProducts())
  }
 
 main()
