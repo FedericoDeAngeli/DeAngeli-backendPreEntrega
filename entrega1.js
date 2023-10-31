@@ -11,8 +11,8 @@ thumbnail
 code
 stock
 
-constructor({title, description, price, thumbnail, code, stock}){
-    this.id = productManager.productsId,
+constructor({id,title, description, price, thumbnail, code, stock}){
+    this.id = id,
     this.title = title,
     this.description = description,
     this.price = price,
@@ -53,7 +53,7 @@ async updateProduct(id, {title, description, price, thumbnail, code, stock}){
     const index = this.products.findIndex((e)=> e.id === id)
     if(index !== -1){
         this.products[index] = new Product({
-        title, description, price, thumbnail, code, stock })
+        id, title, description, price, thumbnail, code, stock })
         
         await this.writeProduct()
         return this.products
@@ -64,10 +64,10 @@ async updateProduct(id, {title, description, price, thumbnail, code, stock}){
 }
 
 async deleteProduct(id){
+    await this.readProduct()
    const index = this.products.findIndex((e)=> e.id === id)
   if(index !== -1){
-    await this.readProduct()
-    this.products.splice(index, 1)
+        this.products.splice(index, 1)
       await this.writeProduct()
       return this.products
    }
