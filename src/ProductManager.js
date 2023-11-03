@@ -1,25 +1,8 @@
 import fs from "fs/promises"
+import { Product } from "./Product.js"
 
 
-class Product {
-    id
-    title
-    description
-    price
-    thumbnail
-    code
-    stock
-    
-    constructor({id,title, description, price, thumbnail, code, stock}){
-        this.id = id,
-        this.title = title,
-        this.description = description,
-        this.price = price,
-        this.thumbnail = thumbnail,
-        this.code = code,
-        this.stock = stock
-    }
-    }
+
 
 export class productManager {
     static productsId = 0
@@ -102,11 +85,7 @@ export class productManager {
        
     }
 
-    async getAll (){
-                   const productJSON = await fs.readFile(this.path, "utf-8")
-      return JSON.parse(productJSON)
-               
-    }
+
     
     async addProduct({title, description, price, code, thumbnail, stock}){
         try {
@@ -156,22 +135,45 @@ export class productManager {
         return productFind
     }
     }
-        
+    
+    async getAll (){
+        const productJSON = await fs.readFile(this.path, "utf-8")
+return JSON.parse(productJSON)
+    
+}
+
+    updProduct(id, {title, description, price, code, thumbnail, stock}){
+        if(id >0 && id <= 4){
+        const index = this.products.findIndex((e)=> e.id === id)
+        if(index){
+            this.products[index] = new Product({
+            id, title, description, price, thumbnail, code, stock })
+            return this.products
+        }else{ throw new Error("No se puede actualizar el producto")}
+    }else{ throw new Error("Id incorrecto")}
+}
+    dltProduct(id) {
+        const index = this.products.findIndex((e)=> e.id === id)
+        this.products.splice(index, 1)
+          return this.products
+
+    }
+
     }
     
 
     
 
 const pm = new productManager({ruta: "productManager.json"})
-pm.init()
+// pm.init()
 
-const p1 = await pm.addProduct ({title: "Curcuma",description: "Adobo", price: "150", code:"1", thumbnail: "img1", stock: "20"})
-const p2 = await pm.addProduct ({title: "pimienta", description: "Molida", price: "250", code:"2",thumbnail: "img2", stock: "10"})   
-const p3 = await pm.addProduct ({title: "Azafrán",description: "Egipcio", price: "1200", code:"3",thumbnail: "img3", stock: "5"})
-const p4 = await pm.addProduct ({title: "Pimentón",description: "Español", price: "300", code:"4",thumbnail: "img4", stock: "22"})
-const p5 = await pm.addProduct ({title: "Cereal",description: "Ositos", price: "700", code:"5",thumbnail: "img6", stock: "18"})
-const p6 = await pm.addProduct ({title: "Orégano",description: "Especial", price: "410", code:"6",thumbnail: "img6", stock: "32"})
-const p7 = await pm.addProduct ({title: "Comino",description: "Especial", price: "780", code:"7",thumbnail: "img7", stock: "32"})
-const p8 = await pm.addProduct ({title: "Cayote",description: "Rico", price: "230", code:"8",thumbnail: "img8", stock: "40"})
-const p9 = await pm.addProduct ({title: "Perrito",description: "Balanceado", price: "1500", code:"9",thumbnail: "img9", stock: "55"})
-const p10 = await pm.addProduct ({title: "Golosina",description: "Gallina", price: "440", code:"10",thumbnail: "img10", stock: "20"})
+// const p1 = await pm.addProduct ({title: "Curcuma",description: "Adobo", price: "150", code:"1", thumbnail: "img1", stock: "20"})
+// const p2 = await pm.addProduct ({title: "pimienta", description: "Molida", price: "250", code:"2",thumbnail: "img2", stock: "10"})   
+// const p3 = await pm.addProduct ({title: "Azafrán",description: "Egipcio", price: "1200", code:"3",thumbnail: "img3", stock: "5"})
+// const p4 = await pm.addProduct ({title: "Pimentón",description: "Español", price: "300", code:"4",thumbnail: "img4", stock: "22"})
+// const p5 = await pm.addProduct ({title: "Cereal",description: "Ositos", price: "700", code:"5",thumbnail: "img6", stock: "18"})
+// const p6 = await pm.addProduct ({title: "Orégano",description: "Especial", price: "410", code:"6",thumbnail: "img6", stock: "32"})
+// const p7 = await pm.addProduct ({title: "Comino",description: "Especial", price: "780", code:"7",thumbnail: "img7", stock: "32"})
+// const p8 = await pm.addProduct ({title: "Cayote",description: "Rico", price: "230", code:"8",thumbnail: "img8", stock: "40"})
+// const p9 = await pm.addProduct ({title: "Perrito",description: "Balanceado", price: "1500", code:"9",thumbnail: "img9", stock: "55"})
+// const p10 = await pm.addProduct ({title: "Golosina",description: "Gallina", price: "440", code:"10",thumbnail: "img10", stock: "20"})

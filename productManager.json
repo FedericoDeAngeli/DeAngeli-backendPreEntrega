@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "title": "mambruli",
+    "description": "chicle",
+    "price": "180",
+    "thumbnail": "img7",
+    "code": "23",
+    "stock": "32"
+  },
+  {
+    "id": 2,
+    "title": "chambarra",
+    "description": "chicle",
+    "price": "180",
+    "thumbnail": "img7",
+    "code": "5",
+    "stock": "32"
+  },
+  {
+    "id": 3,
+    "title": "camavinga",
+    "description": "chicle",
+    "price": "180",
+    "thumbnail": "img7",
+    "code": "8",
+    "stock": "32"
+  }
+]
