@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {productManager} from "./ProductManager.js"
 
+
 const pm = new productManager({ruta: "productManager.json"})
 
 export const productRouter = Router();
@@ -22,7 +23,7 @@ productRouter.get("/", async (req, res) => {
       } catch (error) {
         res.json({
             status: "error",
-            message: error.message
+            message: "No se agregaron productos"
         })
     }
 

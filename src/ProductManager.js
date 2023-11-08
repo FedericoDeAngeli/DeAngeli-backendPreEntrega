@@ -58,6 +58,19 @@ export class productManager {
         }
         
     }
+
+    async  updProduct(id, {title, description, price, code, thumbnail, stock}){
+        await this.readProduct()
+        if(id >0 && id <= this.products.length){
+        const index = this.products.findIndex((e)=> e.id === id)
+        if(index){
+            this.products[index] = new Product({
+            id, title, description, price, thumbnail, code, stock })
+            await this.writeProduct()
+            return this.products
+        }else{ throw new Error("No se puede actualizar el producto")}
+    }else{ throw new Error("Id incorrecto")}
+}
     
     async deleteProduct(id){
         try {
@@ -73,6 +86,14 @@ export class productManager {
         }
        
      }
+  async   dltProduct(id) {
+        const index = this.products.findIndex((e)=> e.id === id)
+        await this.readProduct()
+        this.products.splice(index, 1)
+        await this.writeProduct()
+          return this.products
+
+    }
     
     
     async getProducts(){
@@ -142,22 +163,8 @@ return JSON.parse(productJSON)
     
 }
 
-    updProduct(id, {title, description, price, code, thumbnail, stock}){
-        if(id >0 && id <= 4){
-        const index = this.products.findIndex((e)=> e.id === id)
-        if(index){
-            this.products[index] = new Product({
-            id, title, description, price, thumbnail, code, stock })
-            return this.products
-        }else{ throw new Error("No se puede actualizar el producto")}
-    }else{ throw new Error("Id incorrecto")}
-}
-    dltProduct(id) {
-        const index = this.products.findIndex((e)=> e.id === id)
-        this.products.splice(index, 1)
-          return this.products
-
-    }
+  
+   
 
     }
     
