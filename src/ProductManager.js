@@ -39,13 +39,13 @@ export class productManager {
     }
     
     
-    async updateProduct(id, {title, description, price, thumbnail, code, stock}){
+    async updateProduct(id, {title, description, price, thumbnail, code, stock, status, category}){
         try {
             await this.readProduct()
         const index = this.products.findIndex((e)=> e.id === id)
         if(index !== -1){
             this.products[index] = new Product({
-            title, description, price, thumbnail, code, stock })
+            title, description, price, thumbnail, code, stock, status, category})
             
             await this.writeProduct()
             return this.products
@@ -59,13 +59,13 @@ export class productManager {
         
     }
 
-    async  updProduct(id, {title, description, price, code, thumbnail, stock}){
+    async  updProduct(id, {title, description, price, code, thumbnail, stock, status, category}){
         await this.readProduct()
         if(id >0 && id <= this.products.length){
         const index = this.products.findIndex((e)=> e.id === id)
         if(index){
             this.products[index] = new Product({
-            id, title, description, price, thumbnail, code, stock })
+            id, title, description, price, thumbnail, code, stock, status, category})
             await this.writeProduct()
             return this.products
         }else{ throw new Error("No se puede actualizar el producto")}
@@ -108,9 +108,9 @@ export class productManager {
 
 
     
-    async addProduct({title, description, price, code, thumbnail, stock}){
+    async addProduct({title, description, price, code, thumbnail, stock, status, category}) {
         try {
-            if(!title || !description || !price || !code || !thumbnail || !stock){
+            if(!title || !description || !price || !code || !thumbnail || !stock || !status || !category){
                 console.log("Es obligatorio llenar todos los campos")
             }else{
                 if(this.products.find((e)=> e.code === code)){
@@ -118,7 +118,7 @@ export class productManager {
                 }else{
             
             const id = productManager.generarId();
-            const product = new Product({id, title, description, price,code, thumbnail, code, stock})
+            const product = new Product({id, title, description, price,code, thumbnail, code, stock, status, category})
             await this.readProduct()
             this.products.push(product)
             await this.writeProduct()

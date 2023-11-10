@@ -51,14 +51,16 @@ export class CartManager {
         const index = carts.findIndex((e)=> e.id === id)
         if(index !== -1){
             const productInCart = await this.getCartById(id)
-            const productoPorAgregar = productInCart.findIndex((product)=> product.pId  === pId)
+            const productoPorAgregar = productInCart.product.findIndex((product)=> product.pId  === pId)
 
             if(productoPorAgregar !== -1){
-                productInCart[productoPorAgregar].quantity = productInCart[productoPorAgregar].quantity + 1
+                productInCart.product[productoPorAgregar].quantity = productInCart.product[productoPorAgregar].quantity + 1
         }else{
-            productInCart.push({pId, quantity:1})
+            productInCart.product.push({pId, quantity:1})
+         
         }
-        carts[index].product = productInCart
+        this.carts[index].product =productInCart 
+    
         await this.writeCart()
         console.log("Producto agregado")
     }else{
@@ -83,7 +85,7 @@ async getCartById(id){
     if(!CartFind){
         throw new Error ("Carrito no encontrado")
     }else{
-        return CartFind.product
+        return CartFind
     }
     }
 }

@@ -1,38 +1,35 @@
 [
   {
-    "id": 2,
-    "title": "messi",
-    "description": "AlHilal",
-    "price": "150",
+    "id": 1,
+    "title": "Albahaca",
+    "description": "molida",
+    "price": 250,
     "thumbnail": "img1",
-    "code": "2",
-    "stock": "20"
+    "code": 3,
+    "stock": 15,
+    "status": "true",
+    "category": "especias"
+  },
+  {
+    "id": 2,
+    "title": "comino",
+    "description": "molida",
+    "price": 250,
+    "thumbnail": "img1",
+    "code": 1,
+    "stock": 15,
+    "status": "true",
+    "category": "especias"
   },
   {
     "id": 3,
-    "title": "haaland",
-    "description": "AlHilal",
-    "price": "150",
+    "title": "pimienta",
+    "description": "molida",
+    "price": 250,
     "thumbnail": "img1",
-    "code": "15",
-    "stock": "20"
-  },
-  {
-    "id": 4,
-    "title": "mbappe",
-    "description": "AlHilal",
-    "price": "150",
-    "thumbnail": "img1",
-    "code": "4",
-    "stock": "20"
-  },
-  {
-    "id": 5,
-    "title": "modirc",
-    "description": "AlHilal",
-    "price": "150",
-    "thumbnail": "img1",
-    "code": "7",
-    "stock": "20"
+    "code": 2,
+    "stock": 15,
+    "status": "true",
+    "category": "especias"
   }
 ]
