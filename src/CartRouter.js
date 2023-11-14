@@ -33,6 +33,7 @@ cartRouter.post("/:id/product/:pid", async (req,res)=>{
     const id = parseInt(req.params["id"])
     try {
         await cm.addNewProduct(id, pId)
+        res.json({status: "ok"})
        
     } catch (error) {
         res.json({

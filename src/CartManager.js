@@ -59,7 +59,7 @@ export class CartManager {
             productInCart.product.push({pId, quantity:1})
          
         }
-        this.carts[index].product =productInCart 
+        this.carts[index] =productInCart 
     
         await this.writeCart()
         console.log("Producto agregado")
