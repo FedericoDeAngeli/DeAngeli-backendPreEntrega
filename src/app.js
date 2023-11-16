@@ -3,7 +3,9 @@ import { productRouter } from './ProductRouter.js';
 import { cartRouter } from './CartRouter.js';
 import {engine} from "express-handlebars"
 import { webRouter } from './webrouter.js';
-import {Server} from "socket.io"
+import {Server as IOServer} from "socket.io"
+
+const RealTimeProducts = []
 
 const app = express();
 
@@ -15,6 +17,7 @@ app.use(express.json());
 app.use("/api/productos", productRouter)
 app.use("/api/cart", cartRouter)
 app.use("/", webRouter)
+app.use("/static", express.static("./static"))
 
 
 
@@ -22,11 +25,15 @@ const server = app.listen(8080, ()=>{
     console.log("Conectado al puerto 8080")
 })
 
-const ioServer = new Server(server)
+const ioServer = new IOServer(server)
 
 ioServer.on("connection", socket => {
     console.log("Un cliente se ha conectado:", socket.id) 
-    socket.emit("message", "Bienvenido cliente")
+
+    socket.on("productoAgregado", productos =>{
+        RealTimeProducts.push(productos)
+        ioServer.sockets.emit("agregarProducto", RealTimeProducts)
+    })
 })
 
 
