@@ -5,7 +5,7 @@ import {engine} from "express-handlebars"
 import { webRouter } from './webrouter.js';
 import {Server as IOServer} from "socket.io"
 
-const RealTimeProducts = []
+ export const RealTimeProducts = []
 
 const app = express();
 

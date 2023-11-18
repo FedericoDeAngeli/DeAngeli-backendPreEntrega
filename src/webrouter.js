@@ -1,9 +1,13 @@
 import { Router } from "express";
-
 export const webRouter = Router();
+import { RealTimeProducts } from "./app.js";
+
+
+
 
 webRouter.get("/", (req, res) => {
-  res.render("home", {titulo: "Home"} );
+   const productos = RealTimeProducts
+  res.render("home", {productos: productos} );
 });
 
 webRouter.get("/realtimeproducts", (req, res) => {

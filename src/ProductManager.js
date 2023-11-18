@@ -1,9 +1,6 @@
 import fs from "fs/promises"
 import { Product } from "./Product.js"
 
-
-
-
 export class productManager {
     static productsId = 0
     
@@ -171,7 +168,7 @@ return JSON.parse(productJSON)
 
     
 
-const pm = new productManager({ruta: "productManager.json"})
+// const pm = new productManager({ruta: "productManager.json"})
 // pm.init()
 
 // const p1 = await pm.addProduct ({title: "Curcuma",description: "Adobo", price: "150", code:"1", thumbnail: "img1", stock: "20"})
