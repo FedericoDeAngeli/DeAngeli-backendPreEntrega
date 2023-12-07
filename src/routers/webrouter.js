@@ -1,6 +1,6 @@
 import { Router } from "express";
 export const webRouter = Router();
-import { RealTimeProducts } from "./app.js";
+import { RealTimeProducts } from "../app.js";
 
 
 

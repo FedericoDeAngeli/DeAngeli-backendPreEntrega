@@ -1,8 +1,9 @@
 const socket = io()
+import { productManager } from "../../src/productmanagermongoose.js"
 
 
 
-document.querySelector("button").addEventListener("click", () => {
+ document.querySelector("button").addEventListener("click", async () => {
     const listTitle = document.querySelector("#nombre").value
     const listDescription = document.querySelector("#descripcion").value
     const listPrecio = document.querySelector("#precio").value
@@ -19,6 +20,7 @@ document.querySelector("button").addEventListener("click", () => {
             code: listCode,
             category: listCategory
         }
+       await productManager.addProduct(NuevoProducto)
         socket.emit("productoAgregado", NuevoProducto)
     } else {
         throw new Error("Debes llenar todos los campos")
@@ -32,15 +34,14 @@ document.querySelector("button").addEventListener("click", () => {
     document.querySelector("#category").value = ""
 })
 
-socket.on("agregarProducto", RealTimeProducts => {
+const listadodeprodutos = productManager.find()
+console.log(listadodeprodutos)
 
-    console.log({ RealTimeProducts })
-
-    const tabla = document.querySelector("#tbody")
+const tabla = document.querySelector("#tbody")
 
     tabla.innerHTML = ""
 
-    for (const producto of RealTimeProducts) {
+    for (const producto of listadodeprodutos) {
 
         const fila = document.createElement("tr")
 
@@ -55,7 +56,36 @@ socket.on("agregarProducto", RealTimeProducts => {
 
 `
 
-        tabla.appendChild(fila)
+        tabla.appendChild(fila)}
 
-    }
-})
+
+
+
+// socket.on("agregarProducto", RealTimeProducts => {
+
+//     console.log({ RealTimeProducts })
+
+//     const tabla = document.querySelector("#tbody")
+
+//     tabla.innerHTML = ""
+
+//     for (const producto of RealTimeProducts) {
+
+//         const fila = document.createElement("tr")
+
+//         fila.innerHTML = `
+
+//         <td>${producto.title}</td>
+//         <td>${producto.description}</td>
+//          <td>${producto.price}</td>
+//         <td>${producto.thumbnail}</td>
+//         <td>${producto.code}</td>
+//         <td>${producto.category}</td>
+
+// `
+
+//         tabla.appendChild(fila)
+
+//     }
+// }
+// )

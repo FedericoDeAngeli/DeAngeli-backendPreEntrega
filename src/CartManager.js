@@ -1,5 +1,5 @@
 import fs from "fs/promises"
-import { Cart } from "./Cart.js"
+import { Cart } from "./models/Cart.js"
 
 
 export class CartManager {

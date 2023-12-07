@@ -1,0 +1,13 @@
+[
+  {
+    "id": 1,
+    "title": "pimienta",
+    "description": "negra",
+    "price": 23,
+    "thumbnail": "img1",
+    "code": 12,
+    "stock": 15,
+    "status": "true",
+    "category": "especia"
+  }
+]

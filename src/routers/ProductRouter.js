@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {productManager} from "./ProductManager.js"
+import {productManager} from "../ProductManager.js"
 
 
 const pm = new productManager({ruta: "productManager.json"})
@@ -31,7 +31,7 @@ productRouter.get("/", async (req, res) => {
 
 
 productRouter.get("/:id", async (req, res) => {
-    const id = parseInt(req.params.id)
+    const id = req.params.id
     try { 
         const productos = await pm.getById(id)
         res.json(productos)  
@@ -52,14 +52,14 @@ productRouter.post("/", (req, res) => {
 
 
 productRouter.put("/:id", (req, res)=>{
-    const id = parseInt(req.params.id)
+    const id = req.params.id
     const nuevoProducto = req.body
     const nuevoProductoAgregado = pm.updProduct(id,nuevoProducto)
     res.json(nuevoProductoAgregado)
 })
 
 productRouter.delete("/:id", (req, res) => {
-    const id = parseInt(req.params.id)
+    const id = req.params.id
     const nuevoArreglo = pm.dltProduct(id)
     res.json (nuevoArreglo)
     
