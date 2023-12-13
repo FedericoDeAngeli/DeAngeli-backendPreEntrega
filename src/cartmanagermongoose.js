@@ -25,21 +25,54 @@ export class CartManager{
  async addNewProduct(id, pid){
     const CartFind = await dbCart.findById(id)
     if (CartFind){
-        const productInCart = await dbCart.findByIdAndUpdate(pid,
-            {$set: quantity + 1},
-            {new: true}).lean()
+        const productInCart =  CartFind.product.find(product => product.pid === pid)
+        if(!productInCart){
+            await dbCart.findByIdAndUpdate(id,
+                {$push: {product: {pid: pid, quantity: 1}}},
+                {new: true}).lean()
+        }else{
+           const updateCart = await dbCart.findOneAndUpdate( 
+            { _id: id, 'product.pid': pid },
+           { $inc: { 'product.$.quantity': 1 } },
+           { new: true }).lean()
+           return   updateCart
+        }
+    }
+    
+}
 
-            if(productInCart){
-                return productInCart
-            }else{
-                 const newProduct = await dbCart.create(pid, quantity = 1)
-                 return newProduct
-            }
-        
-    }else{
+
+async deleteProduct(pid){
+    if(!pid){
         throw new Error("Carrito no encontrado")
     }
- }
+    const deleteProd = await dbCart.findByIdAndDelete(pid)
+    return deleteProd
+} 
+
+async updateProductsInCart(_id, nuevosDatos){
+    const newProduct = await dbCart.findByIdAndUpdate(_id,
+        {$push: nuevosDatos},
+        {new: true}).lean()  
+        
+        return newProduct
+        }
+
+async updateProduct(pid, quantity){
+    const product = await dbCart.findByIdAndUpdate(pid,
+        {},
+        {new: true}
+        )
+        return product
+}
+
+async deleteCart(_id){
+    const cart = await dbCart.findByIdAndUpdate(_id,
+        {$push: []},
+        {new: true})
+
+        return cart
+}
 
 }
 

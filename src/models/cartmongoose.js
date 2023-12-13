@@ -2,7 +2,9 @@ import {Schema, model} from "mongoose"
 
 export const CartSchema = new Schema({
     _id: {type: String, required: true},
-    product: [{type: String}]
+    product: [{pid:{type: String, required: true, ref: "product"},
+            quantity: {type: Number}
+    }]
 },{
     strict: "throw",
     versionKey: false,
