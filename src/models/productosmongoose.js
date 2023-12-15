@@ -18,4 +18,5 @@ export const ProductSchema = new Schema({
 })
 
 export const dbProductos = model("productos", ProductSchema)
- 
+
+

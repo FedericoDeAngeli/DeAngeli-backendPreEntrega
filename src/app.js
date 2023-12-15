@@ -11,6 +11,8 @@ import{MONGODB_CNX_STRING} from "./config.js";
 import { PORT } from './config.js';
 import { ProductManager, productManager } from './productmanagermongoose.js';
 import { messageRouter } from './routers/MessageRouterMongoose.js';
+import { cartManagerMongoose } from './cartmanagermongoose.js';
+import { dbCart } from './models/cartmongoose.js';
 
 
  export const RealTimeProducts = []
@@ -51,31 +53,3 @@ ioServer.on("connection", socket => {
 })
 
 
-// await productManager.addProduct({
-    
-//     title: "Marco",
-//     description: "weqwr",
-//     price: 23,
-//     thumbnail: "img1",
-//     code: 27,
-//     stock: 2,
-//     status: "true",
-//     category: "Profe",
-// })
-// const borrar = await productManager.deleteProducto("bbb2e6e8-befd-4881-b647-c1588efc45ea")
-// console.log(borrar)
-
-// const mostrar = await productManager.getAll()
-// console.log(mostrar)
-
-// const actualizar = await productManager.UpdateProducto("e26b82d5-2d6d-485e-b3d4-60341993a833", {
-//     title: "Maria",
-//   description: "Demagistri",
-//     price: 23,
-//      thumbnail: "im13",
-//      code: 85,
-//      stock: 14,
-//      status: "true",
-//     category: "Amor",
-// })
-//  console.log(actualizar)

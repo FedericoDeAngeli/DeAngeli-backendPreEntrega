@@ -29,7 +29,7 @@ export class CartManager{
         if(!productInCart){
             await dbCart.findByIdAndUpdate(id,
                 {$push: {product: {pid: pid, quantity: 1}}},
-                {new: true}).lean()
+                {new: true}).populate("product.pid").lean()
         }else{
            const updateCart = await dbCart.findOneAndUpdate( 
             { _id: id, 'product.pid': pid },
@@ -42,12 +42,21 @@ export class CartManager{
 }
 
 
-async deleteProduct(pid){
-    if(!pid){
+async deleteProduct(id, pid){
+    const idCart = await dbCart.findById(id)
+    if(!idCart){
         throw new Error("Carrito no encontrado")
+    }else{
+      const  idProduct = idCart.product.find(product => product.pid === pid)
+        if(!idProduct){
+            throw new Error("Producto no encontrado")
+        }else{
+            await dbCart.findByIdAndUpdate(id,
+                { $pull: { product: { pid: pid }}},
+                { new: true }).lean()
+        }
     }
-    const deleteProd = await dbCart.findByIdAndDelete(pid)
-    return deleteProd
+    
 } 
 
 async updateProductsInCart(_id, nuevosDatos){
@@ -67,9 +76,7 @@ async updateProduct(pid, quantity){
 }
 
 async deleteCart(_id){
-    const cart = await dbCart.findByIdAndUpdate(_id,
-        {$push: []},
-        {new: true})
+    const cart = await dbCart.findByIdAndDelete(_id,).lean()
 
         return cart
 }

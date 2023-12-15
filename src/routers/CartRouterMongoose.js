@@ -41,17 +41,31 @@ cartRouterMongoose.post("/:id/product/:pid", async (req,res)=>{
 
 cartRouterMongoose.delete("/:id/product/:pid", async (req, res) => {
     const pid = req.params.pid
-    if(!pid){
-        throw new Error ("Producto no encontrado")
-}
-try {
-    await cartManagerMongoose.deleteProduct(pid)
+    const id=req.params.id
+    try {
+    await cartManagerMongoose.deleteProduct(id, pid)
     res.json({status: "ok"})
 } catch (error) {
     res.json({
         status: "error",
         message: error.message})
 }})
+
+cartRouterMongoose.delete("/:id", async (req, res) => {
+    const id = req.params.id
+   try {
+    if(!id){
+        throw new Error ("Carrito no encontrado")
+    }else{
+        const borrado = await cartManagerMongoose.deleteCart(id)
+        res.json({status: "ok"})
+    }
+   } catch (error) {
+    res.json({status: "error", message: error.message})
+   }
+    
+    
+})
 
 cartRouterMongoose.put("/:id", async (req, res) => {
     const nuevoProducto = req.body
