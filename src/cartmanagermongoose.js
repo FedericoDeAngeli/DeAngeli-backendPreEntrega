@@ -9,12 +9,12 @@ export class CartManager{
     }
 
     async getAllCart(){
-        return await dbCart.find().lean()
+        return await dbCart.find().populate("product.pid").lean()
      }
 
      async getCartById(id){
        
-        const CartFind = await dbCart.findById(id).lean()
+        const CartFind = await dbCart.findById(id).populate("product.pid").lean()
         
         if(CartFind){
             return CartFind
@@ -29,7 +29,7 @@ export class CartManager{
         if(!productInCart){
             await dbCart.findByIdAndUpdate(id,
                 {$push: {product: {pid: pid, quantity: 1}}},
-                {new: true}).populate("product.pid").lean()
+                {new: true}).lean()
         }else{
            const updateCart = await dbCart.findOneAndUpdate( 
             { _id: id, 'product.pid': pid },

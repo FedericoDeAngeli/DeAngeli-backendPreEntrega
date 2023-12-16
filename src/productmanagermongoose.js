@@ -14,6 +14,25 @@ export class ProductManager {
        return await dbProductos.find().lean()
     }
 
+    async paginado(criterio, paginacion){ 
+        const result= await dbProductos.paginate(criterio, paginacion)
+        const context = {
+            status: "success",
+            hayDocs: result.docs.length > 0,
+            payload: result.docs,
+            page: result.page,
+            totalPages: result.totalPages,
+            hasNextPage: result.hasNextPage,
+            nextPage: result.nextPage,
+            hasPrevPage: result.hasPrevPage,
+            prevPage: result.prevPage,
+            prevLink: "",
+            nextLink: "",
+        }
+        return context
+    
+    }
+
     async getById(id){
         const buscada = await dbProductos.findById(id).lean()
         if(buscada){

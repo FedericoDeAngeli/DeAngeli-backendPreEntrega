@@ -13,9 +13,11 @@ import { ProductManager, productManager } from './productmanagermongoose.js';
 import { messageRouter } from './routers/MessageRouterMongoose.js';
 import { cartManagerMongoose } from './cartmanagermongoose.js';
 import { dbCart } from './models/cartmongoose.js';
+import { ProductSchema, dbProductos } from './models/productosmongoose.js';
 
 
  export const RealTimeProducts = []
+ 
  
  await mongoose.connect(MONGODB_CNX_STRING)
  console.log("Conectado a base de datos")
@@ -53,3 +55,5 @@ ioServer.on("connection", socket => {
 })
 
 
+// const paginate = await dbProductos.paginate({category: "Balanceados"}, {limit:2, page:1 })
+// console.log(paginate)

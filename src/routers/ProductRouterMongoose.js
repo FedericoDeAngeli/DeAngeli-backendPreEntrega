@@ -6,25 +6,20 @@ export const productRouterMongoose = Router();
 productRouterMongoose.use(json())
 
 productRouterMongoose.get("/", async (req, res) => {
-    try {
-        const limit = req.query.limit
-        if(!limit){
-        const productos = await productManager.getAll()
-        res.json({productos})
-    }else{
-        if(limit >0 && limit <=10){
-            const productos = await productManager.getAll()
-            res.json(productos.slice(0, limit))
-        }else{
-            throw new Error ("Valor de límite excedido")
-        }
+    const criterio = {category: req.query.category}
+    const paginacion = {
+        limit: req.query.limit || 2,
+        page: req.query.page || 1,
+        lean: true
     }
-      } catch (error) {
-        res.json({
-            status: "error",
-            message: "No se agregaron productos"
-        })
-    }
+
+    const result = await productManager.paginado(criterio, paginacion)
+    
+    
+    res.json(result)
+    // res.render("index", result)
+
+   
 })
 
 productRouterMongoose.get("/:id", async (req, res) =>{
