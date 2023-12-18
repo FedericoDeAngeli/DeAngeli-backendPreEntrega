@@ -11,7 +11,9 @@ export class ProductManager {
                 }
     
     async getAll(){
-       return await dbProductos.find().lean()
+       const productos= await dbProductos.find().lean()
+       console.log(productos)
+       return productos
     }
 
     // async paginado(criterio, paginacion){ 
