@@ -6,19 +6,14 @@ export const productRouterMongoose = Router();
 productRouterMongoose.use(json())
 
 productRouterMongoose.get("/", async (req, res) => {
-    const criterio = {category: req.query.category}
-    const paginacion = {
-        limit: req.query.limit || 2,
-        page: req.query.page || 1,
-        lean: true
-    }
+    const producto = productManager.getAll()
+    res.json(producto)
 
-    const result = await productManager.paginado(criterio, paginacion)
+    // const result = await productManager.paginapdo(criterio, paginacion)
     
-    
-    res.json(result)
-    // res.render("index", result)
 
+    // res.json(result)
+    
    
 })
 

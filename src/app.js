@@ -28,6 +28,34 @@ app.engine("handlebars", engine())
 app.set("views", "./views");
 app.set("view engine", "handlebars");
 
+app.get("/", async (req, res) =>{
+    const criterio = req.query || {}
+    const paginacion = {
+        limite: req.query.limit || 2,
+        page: req.query.page || 1,
+        sort: req.query.sort,
+        lean: true
+    }
+    
+    const result= await dbProductos.paginate(criterio, paginacion)
+    const context = {
+        status: "success",
+        hayDocs: result.docs.length > 0,
+        payload: result.docs,
+        page: result.page,
+        totalPages: result.totalPages,
+        hasNextPage: result.hasNextPage,
+        nextPage: result.nextPage,
+        hasPrevPage: result.hasPrevPage,
+        prevPage: result.prevPage,
+        limit: result.limit,
+        prevLink: "",
+        nextLink: "",
+    }
+  
+    res.render("index", context2)
+})
+
 app.use(express.json());
 // app.use("/api/productos", productRouter)
 app.use("/api/productos", productRouterMongoose)

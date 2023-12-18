@@ -6,7 +6,6 @@ import { RealTimeProducts } from "../app.js";
 
 
 webRouter.get("/", (req, res) => {
-   const productos = RealTimeProducts
   res.render("index", {titulo: "Productos"} );
 });
 

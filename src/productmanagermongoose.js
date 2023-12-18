@@ -14,24 +14,23 @@ export class ProductManager {
        return await dbProductos.find().lean()
     }
 
-    async paginado(criterio, paginacion){ 
-        const result= await dbProductos.paginate(criterio, paginacion)
-        const context = {
-            status: "success",
-            hayDocs: result.docs.length > 0,
-            payload: result.docs,
-            page: result.page,
-            totalPages: result.totalPages,
-            hasNextPage: result.hasNextPage,
-            nextPage: result.nextPage,
-            hasPrevPage: result.hasPrevPage,
-            prevPage: result.prevPage,
-            prevLink: "",
-            nextLink: "",
-        }
-        return context
-    
-    }
+    // async paginado(criterio, paginacion){ 
+       
+        
+    //     return context
+
+    // }
+
+    // async sort(order){
+    //     if(order==="asc"){ dbProductos.aggregate([
+    //    {$sort:{price: 1}}
+    //     ])}else{
+    //         if(order==="desc"){ dbProductos.aggregate([
+    //             {$sort:{price:-1}}
+    //         ])
+    //     }
+     
+    // }}
 
     async getById(id){
         const buscada = await dbProductos.findById(id).lean()
