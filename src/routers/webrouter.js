@@ -3,6 +3,8 @@ export const webRouter = Router();
 import { RealTimeProducts } from "../app.js";
 import { dbProductos } from "../models/productosmongoose.js";
 import { dbCart } from "../models/cartmongoose.js";
+import { sessionRouter } from "./SessionRouter.js";
+import { userRouter } from "./UserRouter.js";
 
 
 
@@ -56,3 +58,6 @@ webRouter.get("/cart/:cid", async (req, res) => {
   const carrito = await dbCart.findById(cid).populate("product.pid", "title").lean();
    res.render("carts", {carrito})
 })
+
+ webRouter.use(sessionRouter)
+ webRouter.use(userRouter)

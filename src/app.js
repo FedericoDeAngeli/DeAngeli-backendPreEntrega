@@ -7,13 +7,16 @@ import {engine} from "express-handlebars"
 import { webRouter } from './routers/webrouter.js';
 import {Server as IOServer} from "socket.io"
 import mongoose from 'mongoose';
-import{MONGODB_CNX_STRING} from "./config.js";
+import{MONGODB_CNX_STRING, SESSION_SECRET} from "./config.js";
 import { PORT } from './config.js';
 import { ProductManager, productManager } from './productmanagermongoose.js';
 import { messageRouter } from './routers/MessageRouterMongoose.js';
 import { cartManagerMongoose } from './cartmanagermongoose.js';
 import { dbCart } from './models/cartmongoose.js';
 import { ProductSchema, dbProductos } from './models/productosmongoose.js';
+import { sessionRouter } from './routers/SessionRouter.js';
+import { userRouter } from './routers/UserRouter.js';
+import { sesiones } from './middlewares/sesiones.js';
 
 
  export const RealTimeProducts = []
@@ -23,6 +26,8 @@ import { ProductSchema, dbProductos } from './models/productosmongoose.js';
  console.log("Conectado a base de datos")
 
 const app = express();
+
+app.use(sesiones)
 
 app.engine("handlebars", engine())
 app.set("views", "./views");
@@ -40,7 +45,8 @@ app.use("/api/cart", cartRouterMongoose)
 app.use("/api/message", messageRouter)
 app.use("/", webRouter)
 app.use("/static", express.static("./static"))
-
+app.use("/api/sesiones", sessionRouter)
+app.use("/api/usuarios", userRouter)
 
 
 const server = app.listen(PORT, ()=>{
