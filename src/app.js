@@ -38,6 +38,7 @@ app.set("view engine", "handlebars");
 // })
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }))
 // app.use("/api/productos", productRouter)
 app.use("/api/productos", productRouterMongoose)
 // app.use("/api/cart", cartRouter)

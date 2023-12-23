@@ -47,9 +47,15 @@ sessionRouter.get('/login', function loginView(req, res) {
       }   
     
       req.session['user'] = datosUsuario
-     res.status(200).send("ok")
+      
+     res.status(200).redirect("/")
      
     } catch (error) {
         return res.status(400).send("catch")    }
   })
   
+  sessionRouter.post('/logout', (req, res) => {
+    req.session.destroy(err => {
+      res.redirect('/login')
+    })
+  })

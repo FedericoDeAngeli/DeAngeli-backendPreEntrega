@@ -1,5 +1,5 @@
 <h1>Detalle de productos</h1>
-
+<h2>Bienvenido {{nombre}}</h2>
 
 <ul>
   {{#each payload}}
@@ -20,3 +20,6 @@ Página: <input type="text"> <button onclick="irAPag({{limit}})">ir</button>
     window.location = `/?limit=${limit}&page=${pagDeseada}`
   }
 </script>
+<form action="/logout" method="post">
+  <button type="submit">Desloguearme!</button>
+</form>
